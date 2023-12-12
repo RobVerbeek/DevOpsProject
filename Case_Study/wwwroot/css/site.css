@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  background-color: #333333;
+}
+
+li {
+    list-style-type: none;
+}
+
+h1,h2{
+    font-family: "Montserrat", Verdana;
+}
+h3,h4,h5{
+    font-family: "Roboto", Arial;
+}
+
+.accordion-item {
+    background-color: #FFA500;
+}
+.accordion-button {
+    background-color: #EFEFEF;
+}
+.accordion-button:not(.collapsed) {
+    color: #FFA500;
+    background-color: #333333;
+    border: 5px solid #FFA500;
+}
+#heading{
+    color: #FFA500;
+    font-size: 4rem;
+}
+
+.navbar{
+    background-color: #FFA500;
+}

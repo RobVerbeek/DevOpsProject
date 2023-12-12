@@ -1,0 +1,58 @@
+﻿@using Contentful.Core.Models;
+@model ContentfulCollection<Exercise>
+
+
+@{
+    ViewData["Title"] = "List Of Exercises";
+}
+<h1 id="heading">
+    @ViewData["Title"] <a asp-action="NewExercise"><i class="bi bi-plus-circle-fill"></i></a>
+</h1>
+
+
+
+
+<div class="accordion accordion-flush" id="accordionFlush-example">
+    @foreach (var exercise in Model)
+    {
+        <form method="post" asp-action="EditExercise" asp-controller="Home">
+        <input type="hidden" name="Exercise.Sys.Id" value="@exercise.Sys.Id" />
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-heading-@exercise.Sys.Id">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-@exercise.Sys.Id" aria-expanded="false" aria-controls="flush-collapse-@exercise.Sys.Id">
+                    <h2>@exercise.ExerciseName</h2>
+                </button>
+            </h2>
+            <div id="flush-collapse-@exercise.Sys.Id" class="accordion-collapse collapse" aria-labelledby="flush-heading-@exercise.Sys.Id" data-bs-parent="#accordionFlush-example">
+                <div class="accordion-body row">
+                    <div class="col-9">
+                        <ul>
+                            <li>
+                                <div class="row">
+                                    <h5 class="col-4">Sets</h5>
+                                    <h5 class="col-4">Repetitions</h5>
+                                    <h5 class="col-4">Weight</h5>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="row">
+                                    <h5 class="col-4">@exercise.Sets</h5>
+                                    <h5 class="col-4">@exercise.Repetitions</h5>
+                                    <h5 class="col-4">@exercise.Weight</h5>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-3 text-end pt-2">
+                        <h1>
+                            <button type="submit" class="btn btn-link">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    }
+</div>
