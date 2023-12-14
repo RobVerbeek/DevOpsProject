@@ -13,10 +13,6 @@ COPY . .
 WORKDIR "/src"
 RUN dotnet build "./Case_Study.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Case_Study.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
-
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
