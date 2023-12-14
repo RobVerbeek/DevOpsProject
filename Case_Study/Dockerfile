@@ -11,7 +11,7 @@ WORKDIR /src
 COPY ["Case_Study/Case_Study.csproj", "."]
 RUN dotnet restore "./Case_Study.csproj"
 COPY . .
-RUN dotnet build ["Case_Study/Case_Study.csproj"] -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./Case_Study.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
