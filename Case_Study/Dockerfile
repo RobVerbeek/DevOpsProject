@@ -9,8 +9,9 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Case_Study/Case_Study.csproj", "."]
-RUN dotnet restore "Case_Study.csproj"
+RUN dotnet restore "./Case_Study/./Case_Study.csproj"
 COPY . .
+WORKDIR "/src"
 RUN dotnet build "./Case_Study.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
