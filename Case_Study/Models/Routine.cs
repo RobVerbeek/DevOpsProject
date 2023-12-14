@@ -4,11 +4,11 @@ namespace Case_Study.Models
 {
     public class Routine
     {
-        public SystemProperties? Sys {  get; set; }
+        public required SystemProperties Sys {  get; set; }
         public required string RoutineName { get; set; }
 
-        public List<Exercise>? Exercises { get; set; }
-        public Asset? RoutineImage { get; set; } 
+        public required List<Exercise> Exercises { get; set; }
+        public required Asset RoutineImage { get; set; } 
 
 
     }
