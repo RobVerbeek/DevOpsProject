@@ -131,10 +131,6 @@ namespace Case_Study.Controllers
 
         // Controller for creating and uploading new routines.
 
-        public async Task<IActionResult> NewRoutine()
-        {            
-            return View(); 
-        }
       
 
 

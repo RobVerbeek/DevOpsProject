@@ -9,8 +9,8 @@ namespace Case_Study.Models
 
     public class Exercise
     {
-        public SystemProperties Sys { get; set; }
-        public string ExerciseName{ get; set; }
+        public SystemProperties? Sys { get; set; }
+        public string? ExerciseName{ get; set; }
         public int Repetitions { get; set; }
         public int Weight { get; set; }
         public int Sets { get; set; }
@@ -18,15 +18,15 @@ namespace Case_Study.Models
     }
     public class ViewExercise
     {
-        public string ExerciseName { get; set; }
+        public string? ExerciseName { get; set; }
         public int Repetitions { get; set; }
         public int Weight { get; set; }
         public int Sets { get; set; }
     }
     public class UpdateExercise
     {
-        public string exerciseId { get; set; }
-        public string ExerciseName { get; set; }
+        public string? exerciseId { get; set; }
+        public string? ExerciseName { get; set; }
         public int Repetitions { get; set; }
         public int Weight { get; set; }
         public int Sets { get; set; }
