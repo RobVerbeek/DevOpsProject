@@ -61,7 +61,7 @@ namespace Case_Study.Controllers
         [HttpPost]
         public async Task<IActionResult> EditExercise(Exercise exercise)
         {
-       
+
             var EditingExercise = await _client.GetEntry<Exercise>(exercise.Sys.Id);
             System.Diagnostics.Debug.WriteLine(exercise.Sys.Version, "version or something like that");
             var shit = new UpdateExercise();
@@ -89,10 +89,12 @@ namespace Case_Study.Controllers
             thing.Fields.sets["en-US"] = exercise.Sets;
             thing.Fields.repetitions["en-US"] = exercise.Repetitions;
             System.Diagnostics.Debug.WriteLine(thing.ConvertObjectToJsonString());
-            var version = thing.SystemProperties.Version + 1;
+#pragma warning disable CS8629 // Nullable value type may be null.
+            int version = (int)(thing.SystemProperties.Version + 1);
+#pragma warning restore CS8629 // Nullable value type may be null.
 
             var ChangedExercise = await _managementClient.CreateOrUpdateEntry(thing, "xw17w70tomkg", "exercise", thing.SystemProperties.Version);
-            await _managementClient.PublishEntry(ChangedExercise.SystemProperties.Id,(int)version);
+            await _managementClient.PublishEntry(ChangedExercise.SystemProperties.Id,version);
  
             var Exercises = await _client.GetEntriesByType<Exercise>("exercise");
             return View("ExerciseList", Exercises);
@@ -109,6 +111,7 @@ namespace Case_Study.Controllers
         public async Task<IActionResult> NewExercise([Bind("ExerciseName, Repetitions, Weight, Sets")] ViewExercise exercise) {
             if (ModelState.IsValid)
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 var entry = new Entry<dynamic>
                 {
                     Fields = new
@@ -119,6 +122,7 @@ namespace Case_Study.Controllers
                         sets = new Dictionary<string, int> { { "en-US", exercise.Sets } },
                     }
                 };
+#pragma warning restore CS8604 // Possible null reference argument.
 
                 var NewExercise = await _managementClient.CreateEntry(entry, "exercise");
                 await _managementClient.PublishEntry(NewExercise.SystemProperties.Id,1);

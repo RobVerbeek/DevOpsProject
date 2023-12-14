@@ -9,7 +9,7 @@ namespace Case_Study.Models
 
     public class Exercise
     {
-        public SystemProperties? Sys { get; set; }
+        public required SystemProperties Sys { get; set; }
         public string? ExerciseName{ get; set; }
         public int Repetitions { get; set; }
         public int Weight { get; set; }
