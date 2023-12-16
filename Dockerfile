@@ -4,7 +4,7 @@ FROM alpine:latest
 # Update the repo
 RUN apk update
 # Install the .NET sdk
-RUN apk add dotnet8-sdk
+RUN apk add dotnet7-sdk
 # Copy the project folder into the image
 COPY ./ /src
 # cd into the project folder
