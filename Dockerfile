@@ -1,24 +1,17 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+# Based it off of ubuntu
+FROM alpine:latest
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
-WORKDIR /app
-EXPOSE 8080
-
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
+# Update the repo
+RUN apk update
+# Install the .NET sdk
+RUN apk add dotnet8-sdk
+# Copy the project folder into the image
+COPY ./ /src
+# cd into the project folder
 WORKDIR /src
-COPY ["Case_Study/GymApp.csproj", "Case_Study/"]
-RUN dotnet restore "./Case_Study/./GymApp.csproj"
-COPY . .
-WORKDIR "/src/Case_Study"
-RUN dotnet build "./GymApp.csproj" -c $BUILD_CONFIGURATION -o /app/build
-
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./GymApp.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "GymApp.dll"]
+# Compile the app into the /app directory
+RUN dotnet publish -c Release -o /app
+# Set the default port to 80
+ENV ASPNETCORE_URLS=http://+:80
+# When we run the Docker image, this will be run by default
+CMD ["/app/GymApp"]
