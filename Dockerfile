@@ -1,17 +1,25 @@
-# Based it off of ubuntu
-FROM alpine:latest
+# Use the .NET SDK image based on Ubuntu
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 
-# Update the repo
-RUN apk update
-# Install the .NET sdk
-RUN apk add dotnet7-sdk
-# Copy the project folder into the image
-COPY ./ /src
-# cd into the project folder
-WORKDIR /src
-# Compile the app into the /app directory
-RUN dotnet publish -c Release -o /app
+WORKDIR /app
+
+# Copy the project file and restore dependencies
+COPY Case_Study/*.csproj ./Case_Study/
+RUN dotnet restore ./Case_Study/*.csproj
+
+# Copy the remaining source code and publish the application
+COPY . ./
+RUN dotnet publish Case_Study -c Release -o out
+
+# Build the runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build-env /app/out .
+
 # Set the default port to 80
 ENV ASPNETCORE_URLS=http://+:80
-# When we run the Docker image, this will be run by default
-CMD ["/app/GymApp"]
+EXPOSE 80
+
+# Run the application
+ENTRYPOINT ["dotnet", "GymApp.dll"]
+
