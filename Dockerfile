@@ -11,12 +11,12 @@ RUN dotnet restore ./Case_Study/*.csproj
 COPY . ./
 RUN dotnet publish Case_Study -c Release -o out
 
-# Build the runtime image
+# Build the docker image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-# Set the default port to 80
+# Set the port of the application to 80
 ENV ASPNETCORE_URLS=http://+:80
 EXPOSE 80
 
